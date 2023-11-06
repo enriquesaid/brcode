@@ -1,6 +1,6 @@
 name: brcode
 description: A starting point for Dart libraries or applications.
-version: 1.0.0
+version: 0.0.1
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -8,6 +8,11 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
+  crc: ^0.0.2
+  crclib: ^3.0.0
+  diacritic: ^0.1.4
+  luthor: ^0.2.2
+  slugify: ^2.0.0
   # path: ^1.8.0
 
 dev_dependencies:

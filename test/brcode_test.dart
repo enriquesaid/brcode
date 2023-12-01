@@ -11,7 +11,7 @@ void main() {
         pixKey: '123e4567-e12b-12d1-a456-426655440000',
         merchantName: 'Enrique',
         merchantCity: 'São Paulo',
-        amout: 100,
+        amount: 100,
       );
 
       final code = brCode.generate();

@@ -1,7 +1,8 @@
 name: brcode
-description: A starting point for Dart libraries or applications.
+description: Generates Pix code.
 version: 0.0.1
-# repository: https://github.com/my_org/my_repo
+homepage: https://github.com/enriquesaid/brcode/
+repository: https://github.com/enriquesaid/brcode
 
 environment:
   sdk: ^3.1.5

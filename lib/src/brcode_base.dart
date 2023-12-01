@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:crclib/catalog.dart';
 import 'package:diacritic/diacritic.dart';
 
-/// TODO: class Description
+/// TODO class Description
 class BRCodeValue {
   BRCodeValue(this.id, this._value);
 
@@ -22,14 +22,14 @@ class BRCodeValue {
 /// TODO: class Description
 class BRCode {
   BRCode({
-    required this.amout,
+    required this.amount,
     required this.pixKey,
     required this.merchantName,
     this.merchantCity = '',
   });
 
   final String pixKey;
-  final double amout;
+  final double amount;
   final String merchantName;
   final String merchantCity;
 
@@ -47,7 +47,7 @@ class BRCode {
       }),
       52: "0000",
       53: "986",
-      54: amout.toStringAsFixed(2),
+      54: amount.toStringAsFixed(2),
       58: "BR",
       59: merchantName,
       60: merchantCity,

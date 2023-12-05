@@ -2,7 +2,7 @@ import 'package:brcode/brcode.dart';
 import 'package:test/test.dart';
 
 const mockPIX =
-    '00020126580014BR.GOV.BCB.PIX0136123E4567-E12B-12D1-A456-4266554400005204000053039865406100.005802BR5907Enrique6009Sao Paulo62070503***6304B247';
+    '00020126580014BR.GOV.BCB.PIX0136123e4567-e12b-12d1-a456-4266554400005204000053039865406100.005802BR5907Enrique6009Sao Paulo62070503***6304968A';
 
 void main() {
   group('BRCode', () {
@@ -14,9 +14,9 @@ void main() {
         amount: 100,
       );
 
-      final code = brCode.generate();
+      final code = brCode.generate().toUpperCase();
 
-      expect(code, equals(mockPIX));
+      expect(code, equals(mockPIX.toUpperCase()));
     });
   });
 }

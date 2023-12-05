@@ -2,6 +2,16 @@ import 'dart:convert';
 import 'package:crclib/catalog.dart';
 import 'package:diacritic/diacritic.dart';
 
+enum PointOfInitiationMethod {
+  none(""),
+  unique("12"),
+  nonUnique("11");
+
+  const PointOfInitiationMethod(this.value);
+
+  final String value;
+}
+
 /// TODO class Description
 class BRCodeValue {
   BRCodeValue(this.id, this._value);
@@ -26,12 +36,19 @@ class BRCode {
     required this.pixKey,
     required this.merchantName,
     this.merchantCity = '',
-  });
+    this.postalCode = '',
+    this.pointOfInitiationMethod = PointOfInitiationMethod.none,
+  }) : assert(
+          pointOfInitiationMethod != PointOfInitiationMethod.unique,
+          "PointOfInitiationMethod.unique is not supported yet",
+        );
 
   final String pixKey;
   final double amount;
   final String merchantName;
   final String merchantCity;
+  final String postalCode;
+  final PointOfInitiationMethod pointOfInitiationMethod;
 
   final _crc = Crc16CcittFalse();
   final _crcLength = 4;
@@ -41,9 +58,11 @@ class BRCode {
   String generate() {
     final result = _buildValues({
       00: "01",
+      if (pointOfInitiationMethod != PointOfInitiationMethod.none)
+        01: pointOfInitiationMethod.value,
       26: _buildValues({
         00: "br.gov.bcb.pix".toUpperCase(),
-        01: pixKey.toUpperCase(),
+        01: pixKey,
       }),
       52: "0000",
       53: "986",
@@ -51,6 +70,7 @@ class BRCode {
       58: "BR",
       59: merchantName,
       60: merchantCity,
+      if (postalCode.isNotEmpty) 61: postalCode,
       62: _buildValues({05: "***"}),
     }, withCrc: true);
 

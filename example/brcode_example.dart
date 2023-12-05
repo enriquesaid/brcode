@@ -5,7 +5,9 @@ void main() {
     pixKey: '123',
     merchantName: 'Enrique',
     merchantCity: 'São Paulo',
-    amount: 100,
+    amount: 5,
+    postalCode: '01153000',
+    pointOfInitiationMethod: PointOfInitiationMethod.nonUnique,
   );
 
   final code = brCode.generate();

@@ -36,3 +36,8 @@ final code = brCode.generate();
 ```
 
 ## Additional information
+
+Made fallowing this guides
+
+https://www.bcb.gov.br/content/estabilidadefinanceira/spb_docs/ManualBRCode.pdf
+https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/II_ManualdePadroesparaIniciacaodoPix.pdf

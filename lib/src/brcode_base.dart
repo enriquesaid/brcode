@@ -12,7 +12,9 @@ enum PointOfInitiationMethod {
   final String value;
 }
 
-/// TODO class Description
+/// Represents a value in the BR Code (Pix) structure.
+///
+/// It handles formatting the ID, length, and value according to the TLV standard.
 class BRCodeValue {
   BRCodeValue(this.id, this._value);
 
@@ -24,12 +26,18 @@ class BRCodeValue {
   String get formattedLength => value.length.toString().padLeft(2, "0");
 
   @override
-  toString() {
+  String toString() {
     return '$formattedId$formattedLength$value';
   }
 }
 
-/// TODO: class Description
+/// Generates a static Pix code (BR Code).
+///
+/// The [pixKey] is required and must not be empty.
+/// The [merchantName] is required and must be between 1 and 25 characters.
+/// The [merchantCity] is required and must be between 1 and 15 characters.
+/// The [amount] must be non-negative.
+/// The [txId] defaults to '***' (valid for static QR codes).
 class BRCode {
   BRCode({
     required this.amount,
@@ -38,10 +46,26 @@ class BRCode {
     this.merchantCity = '',
     this.postalCode = '',
     this.pointOfInitiationMethod = PointOfInitiationMethod.none,
-  }) : assert(
-          pointOfInitiationMethod != PointOfInitiationMethod.unique,
-          "PointOfInitiationMethod.unique is not supported yet",
-        );
+    this.txId = '***',
+  }) {
+    if (pixKey.isEmpty) {
+      throw ArgumentError.value(pixKey, 'pixKey', 'must not be empty');
+    }
+    if (merchantName.isEmpty || merchantName.length > 25) {
+      throw ArgumentError.value(merchantName, 'merchantName', 'must be between 1 and 25 characters');
+    }
+    if (merchantCity.isEmpty || merchantCity.length > 15) {
+      throw ArgumentError.value(merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+    }
+    if (amount < 0) {
+      throw ArgumentError.value(amount, 'amount', 'must be non-negative');
+    }
+    // TxId validation could be stricter depending on requirements, but max length is important.
+    // For static QR codes, it's often '***' or a user-defined identifier (max 25 chars).
+    if (txId.length > 25) {
+      throw ArgumentError.value(txId, 'txId', 'must be at most 25 characters');
+    }
+  }
 
   final String pixKey;
   final double amount;
@@ -49,12 +73,13 @@ class BRCode {
   final String merchantCity;
   final String postalCode;
   final PointOfInitiationMethod pointOfInitiationMethod;
+  final String txId;
 
   final _crc = Crc16CcittFalse();
   final _crcLength = 4;
   final _crcId = 63;
 
-  /// TODO: method Description
+  /// Generates the Pix code string.
   String generate() {
     final result = _buildValues({
       00: "01",
@@ -71,7 +96,7 @@ class BRCode {
       59: merchantName,
       60: merchantCity,
       if (postalCode.isNotEmpty) 61: postalCode,
-      62: _buildValues({05: "***"}),
+      62: _buildValues({05: txId}),
     }, withCrc: true);
 
     return result;

@@ -1,6 +1,6 @@
 name: brcode
 description: Generates Pix code.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/enriquesaid/brcode/
 repository: https://github.com/enriquesaid/brcode
 
@@ -9,11 +9,8 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  crc: ^0.0.2
   crclib: ^3.0.0
   diacritic: ^0.1.4
-  luthor: ^0.2.2
-  slugify: ^2.0.0
   # path: ^1.8.0
 
 dev_dependencies:

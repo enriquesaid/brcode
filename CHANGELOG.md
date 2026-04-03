@@ -1,3 +1,8 @@
+## 0.0.4
+
+- **Project Metadata**: Cleaned up `pubspec.yaml` by removing unused comments and draft dependencies.
+- **Documentation**: Updated README to reflect the latest version and ensured consistency across project files.
+
 ## 0.0.3
 
 - **Improvement**: Added input validation for Pix Key, Merchant Name, City, Amount, and TxId.

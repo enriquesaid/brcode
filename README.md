@@ -25,7 +25,7 @@ Add the dependency to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  brcode: ^0.0.3
+  brcode: ^0.0.4
 ```
 
 Or run:

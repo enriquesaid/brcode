@@ -12,7 +12,7 @@ enum PointOfInitiationMethod {
   final String value;
 }
 
-/// Represents a value in the BR Code (Pix) structure.
+/// Represents a Tag-Length-Value (TLV) object for the BR Code.
 ///
 /// It handles formatting the ID, length, and value according to the TLV standard.
 class BRCodeValue {

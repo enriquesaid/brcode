@@ -31,6 +31,8 @@ class BRCodeValue {
   }
 }
 
+/// The main class for constructing and generating Brazilian Pix QR codes.
+///
 /// Generates a static Pix code (BR Code).
 ///
 /// The [pixKey] is required and must not be empty.

@@ -79,7 +79,10 @@ class BRCode {
   final _crcLength = 4;
   final _crcId = 63;
 
-  /// Generates the Pix code string.
+  /// Constructs the final payload string for the BR Code.
+  ///
+  /// It builds a map of values (IDs 00, 26, 52, etc.) and calculates a CRC,
+  /// which is the standard process for generating the EMVCo-compliant string for Pix.
   String generate() {
     final result = _buildValues({
       00: "01",

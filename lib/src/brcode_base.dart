@@ -88,7 +88,7 @@ class BRCode {
       if (pointOfInitiationMethod != PointOfInitiationMethod.none)
         01: pointOfInitiationMethod.value,
       26: _buildValues({
-        00: "br.gov.bcb.pix".toUpperCase(),
+        00: "BR.GOV.BCB.PIX",
         01: pixKey,
       }),
       52: "0000",

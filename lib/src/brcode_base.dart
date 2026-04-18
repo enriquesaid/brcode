@@ -53,10 +53,12 @@ class BRCode {
       throw ArgumentError.value(pixKey, 'pixKey', 'must not be empty');
     }
     if (merchantName.isEmpty || merchantName.length > 25) {
-      throw ArgumentError.value(merchantName, 'merchantName', 'must be between 1 and 25 characters');
+      throw ArgumentError.value(
+          merchantName, 'merchantName', 'must be between 1 and 25 characters');
     }
     if (merchantCity.isEmpty || merchantCity.length > 15) {
-      throw ArgumentError.value(merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+      throw ArgumentError.value(
+          merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
     }
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');
@@ -76,9 +78,9 @@ class BRCode {
   final PointOfInitiationMethod pointOfInitiationMethod;
   final String txId;
 
-  final _crc = Crc16CcittFalse();
-  final _crcLength = 4;
-  final _crcId = 63;
+  static final _crc = Crc16CcittFalse();
+  static const _crcLength = 4;
+  static const _crcId = 63;
 
   /// Generates the Pix code string.
   String generate() {

@@ -50,14 +50,17 @@ class BRCode {
     this.pointOfInitiationMethod = PointOfInitiationMethod.none,
     this.txId = '***',
   }) {
-    if (pixKey.isEmpty) {
-      throw ArgumentError.value(pixKey, 'pixKey', 'must not be empty');
+    if (pixKey.isEmpty || pixKey.length > 99) {
+      throw ArgumentError.value(pixKey, 'pixKey', 'must be between 1 and 99 characters');
     }
     if (merchantName.isEmpty || merchantName.length > 25) {
       throw ArgumentError.value(merchantName, 'merchantName', 'must be between 1 and 25 characters');
     }
     if (merchantCity.isEmpty || merchantCity.length > 15) {
       throw ArgumentError.value(merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+    }
+    if (postalCode.length > 99) {
+      throw ArgumentError.value(postalCode, 'postalCode', 'must be at most 99 characters');
     }
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');

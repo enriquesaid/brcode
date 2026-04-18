@@ -103,11 +103,11 @@ class BRCode {
   }
 
   String _buildValues(Map<int, String> map, {bool withCrc = false}) {
-    final values = List.from(
-      map.entries.map(
-        (e) => BRCodeValue(e.key, e.value).toString(),
-      ),
-    ).join("");
+    final values = map.entries
+        .map(
+          (e) => BRCodeValue(e.key, e.value).toString(),
+        )
+        .join("");
 
     final crc = withCrc ? _buildCrcValue(values) : '';
 

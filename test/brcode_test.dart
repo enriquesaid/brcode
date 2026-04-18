@@ -59,7 +59,8 @@ void main() {
       expect(
         () => BRCode(
           pixKey: '123',
-          merchantName: 'A very long merchant name that exceeds twenty five characters',
+          merchantName:
+              'A very long merchant name that exceeds twenty five characters',
           merchantCity: 'São Paulo',
           amount: 100,
         ),

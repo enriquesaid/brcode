@@ -54,10 +54,12 @@ class BRCode {
       throw ArgumentError.value(pixKey, 'pixKey', 'must not be empty');
     }
     if (merchantName.isEmpty || merchantName.length > 25) {
-      throw ArgumentError.value(merchantName, 'merchantName', 'must be between 1 and 25 characters');
+      throw ArgumentError.value(
+          merchantName, 'merchantName', 'must be between 1 and 25 characters');
     }
     if (merchantCity.isEmpty || merchantCity.length > 15) {
-      throw ArgumentError.value(merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+      throw ArgumentError.value(
+          merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
     }
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');
@@ -105,11 +107,11 @@ class BRCode {
   }
 
   String _buildValues(Map<int, String> map, {bool withCrc = false}) {
-    final values = List.from(
-      map.entries.map(
-        (e) => BRCodeValue(e.key, e.value).toString(),
-      ),
-    ).join("");
+    final values = map.entries
+        .map(
+          (e) => BRCodeValue(e.key, e.value).toString(),
+        )
+        .join("");
 
     final crc = withCrc ? _buildCrcValue(values) : '';
 

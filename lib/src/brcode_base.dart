@@ -16,12 +16,11 @@ enum PointOfInitiationMethod {
 ///
 /// It handles formatting the ID, length, and value according to the TLV standard.
 class BRCodeValue {
-  BRCodeValue(this.id, this._value);
+  BRCodeValue(this.id, String value) : value = removeDiacritics(value);
 
   final int id;
-  final String _value;
+  final String value;
 
-  String get value => removeDiacritics(_value);
   String get formattedId => id.toString().padLeft(2, "0");
   String get formattedLength => value.length.toString().padLeft(2, "0");
 

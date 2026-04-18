@@ -33,6 +33,20 @@ void main() {
       expect(code.contains('62110507MYID123'), isTrue);
     });
 
+    test('generate a valid pix code with postalCode', () {
+      final brCode = BRCode(
+        pixKey: '123e4567-e12b-12d1-a456-426655440000',
+        merchantName: 'Enrique',
+        merchantCity: 'São Paulo',
+        amount: 100,
+        postalCode: '12345678',
+      );
+
+      final code = brCode.generate();
+      // Check if code contains the postalCode in tag 61
+      expect(code.contains('610812345678'), isTrue);
+    });
+
     test('throw error if pixKey is empty', () {
       expect(
         () => BRCode(

@@ -21,7 +21,6 @@ void main() {
 
     // Example output (will vary due to CRC):
     // 00020126580014BR.GOV.BCB.PIX0136123e4567-e12b-12d1-a456-426655440000520400005303986540542.005802BR5913Enrique Utils6009Sao Paulo61080115300062120508TX1234566304...
-
   } catch (e) {
     print('Error generating code: $e');
   }

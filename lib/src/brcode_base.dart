@@ -50,18 +50,32 @@ class BRCode {
     this.txId = '***',
   }) {
     if (pixKey.isEmpty || pixKey.length > 99) {
-      throw ArgumentError.value(pixKey, 'pixKey', 'must be between 1 and 99 characters');
+      throw ArgumentError.value(
+        pixKey,
+        'pixKey',
+        'must be between 1 and 99 characters',
+      );
     }
     if (merchantName.isEmpty || merchantName.length > 25) {
       throw ArgumentError.value(
-          merchantName, 'merchantName', 'must be between 1 and 25 characters');
+        merchantName,
+        'merchantName',
+        'must be between 1 and 25 characters',
+      );
     }
     if (merchantCity.isEmpty || merchantCity.length > 15) {
       throw ArgumentError.value(
-          merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+        merchantCity,
+        'merchantCity',
+        'must be between 1 and 15 characters',
+      );
     }
     if (postalCode.length > 99) {
-      throw ArgumentError.value(postalCode, 'postalCode', 'must be at most 99 characters');
+      throw ArgumentError.value(
+        postalCode,
+        'postalCode',
+        'must be at most 99 characters',
+      );
     }
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');
@@ -81,20 +95,21 @@ class BRCode {
   final PointOfInitiationMethod pointOfInitiationMethod;
   final String txId;
 
+  String? _cachedValue;
+
   static final _crc = Crc16CcittFalse();
   static const _crcLength = 4;
   static const _crcId = 63;
 
   /// Generates the Pix code string.
   String generate() {
+    if (_cachedValue != null) return _cachedValue!;
+
     final result = _buildValues({
       00: "01",
       if (pointOfInitiationMethod != PointOfInitiationMethod.none)
         01: pointOfInitiationMethod.value,
-      26: _buildValues({
-        00: "BR.GOV.BCB.PIX",
-        01: pixKey,
-      }),
+      26: _buildValues({00: "BR.GOV.BCB.PIX", 01: pixKey}),
       52: "0000",
       53: "986",
       54: amount.toStringAsFixed(2),
@@ -105,14 +120,14 @@ class BRCode {
       62: _buildValues({05: txId}),
     }, withCrc: true);
 
+    _cachedValue = result;
+
     return result;
   }
 
   String _buildValues(Map<int, String> map, {bool withCrc = false}) {
     final values = map.entries
-        .map(
-          (e) => BRCodeValue(e.key, e.value).toString(),
-        )
+        .map((e) => BRCodeValue(e.key, e.value).toString())
         .join("");
 
     final crc = withCrc ? _buildCrcValue(values) : '';

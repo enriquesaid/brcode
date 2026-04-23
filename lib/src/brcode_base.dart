@@ -16,7 +16,18 @@ enum PointOfInitiationMethod {
 ///
 /// It handles formatting the ID, length, and value according to the TLV standard.
 class BRCodeValue {
-  BRCodeValue(this.id, String value) : value = removeDiacritics(value);
+  BRCodeValue(this.id, String value) : value = removeDiacritics(value) {
+    if (id < 0 || id > 99) {
+      throw ArgumentError.value(id, 'id', 'must be between 0 and 99');
+    }
+    if (this.value.length > 99) {
+      throw ArgumentError.value(
+        value,
+        'value',
+        'formatted value must be at most 99 characters (current length: ${this.value.length})',
+      );
+    }
+  }
 
   final int id;
   final String value;
@@ -34,7 +45,7 @@ class BRCodeValue {
 ///
 /// Generates a static Pix code (BR Code).
 ///
-/// The [pixKey] is required and must not be empty.
+/// The [pixKey] is required and must be between 1 and 77 characters.
 /// The [merchantName] is required and must be between 1 and 25 characters.
 /// The [merchantCity] is required and must be between 1 and 15 characters.
 /// The [amount] must be non-negative.
@@ -49,19 +60,33 @@ class BRCode {
     this.pointOfInitiationMethod = PointOfInitiationMethod.none,
     this.txId = '***',
   }) {
-    if (pixKey.isEmpty || pixKey.length > 99) {
-      throw ArgumentError.value(pixKey, 'pixKey', 'must be between 1 and 99 characters');
+    if (pixKey.isEmpty || pixKey.length > 77) {
+      throw ArgumentError.value(
+        pixKey,
+        'pixKey',
+        'must be between 1 and 77 characters',
+      );
     }
     if (merchantName.isEmpty || merchantName.length > 25) {
       throw ArgumentError.value(
-          merchantName, 'merchantName', 'must be between 1 and 25 characters');
+        merchantName,
+        'merchantName',
+        'must be between 1 and 25 characters',
+      );
     }
     if (merchantCity.isEmpty || merchantCity.length > 15) {
       throw ArgumentError.value(
-          merchantCity, 'merchantCity', 'must be between 1 and 15 characters');
+        merchantCity,
+        'merchantCity',
+        'must be between 1 and 15 characters',
+      );
     }
     if (postalCode.length > 99) {
-      throw ArgumentError.value(postalCode, 'postalCode', 'must be at most 99 characters');
+      throw ArgumentError.value(
+        postalCode,
+        'postalCode',
+        'must be at most 99 characters',
+      );
     }
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');
@@ -91,10 +116,7 @@ class BRCode {
       00: "01",
       if (pointOfInitiationMethod != PointOfInitiationMethod.none)
         01: pointOfInitiationMethod.value,
-      26: _buildValues({
-        00: "BR.GOV.BCB.PIX",
-        01: pixKey,
-      }),
+      26: _buildValues({00: "BR.GOV.BCB.PIX", 01: pixKey}),
       52: "0000",
       53: "986",
       54: amount.toStringAsFixed(2),
@@ -110,9 +132,7 @@ class BRCode {
 
   String _buildValues(Map<int, String> map, {bool withCrc = false}) {
     final values = map.entries
-        .map(
-          (e) => BRCodeValue(e.key, e.value).toString(),
-        )
+        .map((e) => BRCodeValue(e.key, e.value).toString())
         .join("");
 
     final crc = withCrc ? _buildCrcValue(values) : '';

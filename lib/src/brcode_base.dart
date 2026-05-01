@@ -16,7 +16,10 @@ enum PointOfInitiationMethod {
 ///
 /// It handles formatting the ID, length, and value according to the TLV standard.
 class BRCodeValue {
-  BRCodeValue(this.id, String value) : value = removeDiacritics(value);
+  BRCodeValue(this.id, String value) : value = removeDiacritics(value) {
+    assert(id >= 0 && id <= 99, 'ID must be between 0 and 99');
+    assert(this.value.length <= 99, 'Value length must be at most 99');
+  }
 
   final int id;
   final String value;

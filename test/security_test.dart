@@ -29,5 +29,29 @@ void main() {
         throwsA(isA<ArgumentError>()),
       );
     });
+
+    test('throw error if amount is NaN', () {
+      expect(
+        () => BRCode(
+          pixKey: '123e4567-e12b-12d1-a456-426655440000',
+          merchantName: 'Enrique',
+          merchantCity: 'São Paulo',
+          amount: double.nan,
+        ),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('throw error if amount is Infinity', () {
+      expect(
+        () => BRCode(
+          pixKey: '123e4567-e12b-12d1-a456-426655440000',
+          merchantName: 'Enrique',
+          merchantCity: 'São Paulo',
+          amount: double.infinity,
+        ),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
   });
 }

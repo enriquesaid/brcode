@@ -77,8 +77,12 @@ class BRCode {
         'must be at most 99 characters',
       );
     }
-    if (amount < 0) {
-      throw ArgumentError.value(amount, 'amount', 'must be non-negative');
+    if (amount < 0 || !amount.isFinite) {
+      throw ArgumentError.value(
+        amount,
+        'amount',
+        'must be a non-negative finite number',
+      );
     }
     // TxId validation could be stricter depending on requirements, but max length is important.
     // For static QR codes, it's often '***' or a user-defined identifier (max 25 chars).

@@ -49,41 +49,24 @@ class BRCode {
     this.pointOfInitiationMethod = PointOfInitiationMethod.none,
     this.txId = '***',
   }) {
-    if (pixKey.isEmpty || pixKey.length > 99) {
-      throw ArgumentError.value(
-        pixKey,
-        'pixKey',
-        'must be between 1 and 99 characters',
-      );
-    }
-    if (merchantName.isEmpty || merchantName.length > 25) {
-      throw ArgumentError.value(
-        merchantName,
-        'merchantName',
-        'must be between 1 and 25 characters',
-      );
-    }
-    if (merchantCity.isEmpty || merchantCity.length > 15) {
-      throw ArgumentError.value(
-        merchantCity,
-        'merchantCity',
-        'must be between 1 and 15 characters',
-      );
-    }
-    if (postalCode.length > 99) {
-      throw ArgumentError.value(
-        postalCode,
-        'postalCode',
-        'must be at most 99 characters',
-      );
-    }
+    _validateLength(pixKey, 'pixKey', 99, min: 1);
+    _validateLength(merchantName, 'merchantName', 25, min: 1);
+    _validateLength(merchantCity, 'merchantCity', 15, min: 1);
+    _validateLength(postalCode, 'postalCode', 99);
+
     if (amount < 0) {
       throw ArgumentError.value(amount, 'amount', 'must be non-negative');
     }
-    // TxId validation could be stricter depending on requirements, but max length is important.
-    // For static QR codes, it's often '***' or a user-defined identifier (max 25 chars).
-    if (txId.length > 25) {
-      throw ArgumentError.value(txId, 'txId', 'must be at most 25 characters');
+
+    _validateLength(txId, 'txId', 25);
+  }
+
+  void _validateLength(String value, String name, int max, {int min = 0}) {
+    if (value.length < min || value.length > max) {
+      final message = min > 0
+          ? 'must be between $min and $max characters'
+          : 'must be at most $max characters';
+      throw ArgumentError.value(value, name, message);
     }
   }
 

@@ -47,6 +47,34 @@ void main() {
       expect(code.contains('610812345678'), isTrue);
     });
 
+    test('generate a valid pix code with pointOfInitiationMethod unique', () {
+      final brCode = BRCode(
+        pixKey: '123e4567-e12b-12d1-a456-426655440000',
+        merchantName: 'Enrique',
+        merchantCity: 'São Paulo',
+        amount: 100,
+        pointOfInitiationMethod: PointOfInitiationMethod.unique,
+      );
+
+      final code = brCode.generate();
+      // Check if code contains the pointOfInitiationMethod in tag 01
+      expect(code.contains('010212'), isTrue);
+    });
+
+    test('generate a valid pix code with pointOfInitiationMethod nonUnique', () {
+      final brCode = BRCode(
+        pixKey: '123e4567-e12b-12d1-a456-426655440000',
+        merchantName: 'Enrique',
+        merchantCity: 'São Paulo',
+        amount: 100,
+        pointOfInitiationMethod: PointOfInitiationMethod.nonUnique,
+      );
+
+      final code = brCode.generate();
+      // Check if code contains the pointOfInitiationMethod in tag 01
+      expect(code.contains('010211'), isTrue);
+    });
+
     test('throw error if pixKey is empty', () {
       expect(
         () => BRCode(

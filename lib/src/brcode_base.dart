@@ -114,7 +114,7 @@ class BRCode {
 
   /// Generates the Pix code string.
   String generate() {
-    final result = _buildValues({
+    return _buildValues({
       _tagPayloadFormatIndicator: _payloadFormatIndicatorValue,
       if (pointOfInitiationMethod != PointOfInitiationMethod.none)
         _tagPointOfInitiationMethod: pointOfInitiationMethod.value,
@@ -131,14 +131,11 @@ class BRCode {
       if (postalCode.isNotEmpty) _tagPostalCode: postalCode,
       _tagAdditionalDataFieldTemplate: _buildValues({_subTagTxId: txId}),
     }, withCrc: true);
-
-    return result;
   }
 
   String _buildValues(Map<int, String> map, {bool withCrc = false}) {
-    final values = map.entries
-        .map((e) => BRCodeValue(e.key, e.value).toString())
-        .join("");
+    final values =
+        map.entries.map((e) => BRCodeValue(e.key, e.value).toString()).join("");
 
     final crc = withCrc ? _buildCrcValue(values) : '';
 

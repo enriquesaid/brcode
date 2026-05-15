@@ -86,8 +86,8 @@ class BRCode {
   static const _crcId = 63;
 
   // EMV-QRCPS Tag IDs
-  static const _tagPayloadFormatIndicator = 00;
-  static const _tagPointOfInitiationMethod = 01;
+  static const _tagPayloadFormatIndicator = 0;
+  static const _tagPointOfInitiationMethod = 1;
   static const _tagMerchantAccountInformation = 26;
   static const _tagMerchantCategoryCode = 52;
   static const _tagTransactionCurrency = 53;
@@ -99,11 +99,11 @@ class BRCode {
   static const _tagAdditionalDataFieldTemplate = 62;
 
   // Merchant Account Information sub-tag IDs
-  static const _subTagGui = 00;
-  static const _subTagPixKey = 01;
+  static const _subTagGui = 0;
+  static const _subTagPixKey = 1;
 
   // Additional Data Field Template sub-tag IDs
-  static const _subTagTxId = 05;
+  static const _subTagTxId = 5;
 
   // Default values
   static const _payloadFormatIndicatorValue = "01";
